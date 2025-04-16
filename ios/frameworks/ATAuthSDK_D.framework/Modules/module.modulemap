@@ -1,4 +1,4 @@
-framework module ATAuthSDK_D {
+framework module ATAuthSDK {
   umbrella header "ATAuthSDK.h"
 
   export *
