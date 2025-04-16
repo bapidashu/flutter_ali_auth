@@ -26,7 +26,7 @@ Flutter Ali Auth Plugin 阿里云一键登录Flutter插件
 
   s.vendored_frameworks = 'frameworks/*.framework'
   s.framework = 'Network'
-  s.resource = 'frameworks/ATAuthSDK_D.framework/ATAuthSDK.bundle'
+  s.resource = 'frameworks/ATAuthSDK.framework/ATAuthSDK.bundle'
 
   s.xcconfig = {
     'OTHER_LDFLAGS' => '-ObjC',
