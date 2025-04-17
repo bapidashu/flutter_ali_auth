@@ -253,7 +253,7 @@ extension AuthUIBuilder {
         }
 
         model.checkBoxImageEdgeInsets = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
-        model.checkBoxWH = (config.checkBoxWH ?? 15)
+        model.checkBoxWH = CGFloat((config.checkBoxWH ?? 15))
 
         // privacy
         model.privacyOne = [config.privacyOneName ?? "《使用协议》", config.privacyOneUrl ?? "http://******"]
