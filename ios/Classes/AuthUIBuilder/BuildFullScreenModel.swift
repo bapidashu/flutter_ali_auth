@@ -166,7 +166,7 @@ extension AuthUIBuilder {
 
         loginAttribute.updateValue(config.loginBtnTextColor?.uicolor() ?? UIColor.white, forKey: NSAttributedString.Key.foregroundColor)
 
-        loginAttribute.updateValue(UIFont(name: PF_Regular, size: CGFloat(config.loginBtnTextSize ?? Font_17))!, forKey: NSAttributedString.Key.font)
+        loginAttribute.updateValue(UIFont(name: PF_Bold, size: CGFloat(config.loginBtnTextSize ?? Font_17))!, forKey: NSAttributedString.Key.font)
 
         model.loginBtnText = NSAttributedString(string: config.loginBtnText ?? "一键登录", attributes: loginAttribute)
 
@@ -253,7 +253,7 @@ extension AuthUIBuilder {
         }
 
         model.checkBoxImageEdgeInsets = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
-        model.checkBoxWH = 24
+        model.checkBoxWH = (config.checkBoxWH ?? 15)
 
         // privacy
         model.privacyOne = [config.privacyOneName ?? "《使用协议》", config.privacyOneUrl ?? "http://******"]
