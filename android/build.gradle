@@ -26,6 +26,9 @@ rootProject.allprojects {
 apply plugin: 'com.android.library'
 
 android {
+ 
+    namespace 'com.fluttercandies.flutter_ali_auth'
+
     compileSdkVersion 31
 
     aaptOptions {
