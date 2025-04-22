@@ -115,8 +115,9 @@ public class FullPortConfig extends BaseUIConfig {
         }
 
         mAuthHelper.setAuthUIConfig(new AuthUIConfig.Builder()
-                .setStatusBarColor(Color.WHITE)
+                .setStatusBarColor(Color.TRANSPARENT)
                 .setLightColor(true)
+                .setStatusBarUIFlag(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN) 
 
                 //沉浸式状态栏
                 .setNavHidden(authUIModel.navIsHidden)
