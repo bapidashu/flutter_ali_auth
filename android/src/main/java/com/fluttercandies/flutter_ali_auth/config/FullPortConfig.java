@@ -149,6 +149,7 @@ public class FullPortConfig extends BaseUIConfig {
 
                 .setLogBtnText(authUIModel.loginBtnText)
                 .setLogBtnTextColor(Color.parseColor(authUIModel.loginBtnTextColor))
+                .setLogBtnTextSizeDp(authUIModel.loginBtnTextSize)
                 .setLogBtnOffsetY((int) loginBtnOffsetY)
                 .setLogBtnOffsetX(0)
                 .setLogBtnWidth(((int) loginBtnWidth))
