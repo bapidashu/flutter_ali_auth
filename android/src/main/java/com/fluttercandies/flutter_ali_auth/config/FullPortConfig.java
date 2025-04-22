@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Build;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.fluttercandies.flutter_ali_auth.R;
