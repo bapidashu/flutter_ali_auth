@@ -75,7 +75,7 @@ extension AuthUIBuilder {
 
         model.navTitle = NSAttributedString(string: config.navTitle ?? "", attributes: navTitleAttributes)
         // Logo
-        model.logoIsHidden = false
+        model.logoIsHidden = config.logoIsHidden ?? false
 
         if let logoImage = config.logoImage {
             if let logoImageAssets = FlutterAssetImage(logoImage) {
