@@ -127,6 +127,7 @@ public class AuthUIModel {
     public String privacyOperatorPreText = "《";
     public String privacyOperatorSufText  = "》";
     public Integer privacyOperatorIndex;
+    public Boolean privacyAlertIsNeedShow = false;
     public List<CustomViewBlock> customViewBlockList;
 
     @NonNull
@@ -217,6 +218,7 @@ public class AuthUIModel {
                 ", privacyOperatorSufText='" + privacyOperatorSufText + '\'' +
                 ", privacyOperatorIndex=" + privacyOperatorIndex +
                 ", customViewBlockList=" + customViewBlockList +
+                ", privacyAlertIsNeedShow=" + privacyAlertIsNeedShow +
                 '}';
     }
 }

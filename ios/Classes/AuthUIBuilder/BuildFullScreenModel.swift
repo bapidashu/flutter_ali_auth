@@ -14,7 +14,7 @@ extension AuthUIBuilder {
     // MARK: - 构建全屏授权页面
 
     func buildFullScreenModel(config: AuthUIConfig) -> TXCustomModel {
-        print("\(String(describing: config))")
+        print("1111--\(String(describing: config))")
         var kHorizontal: Bool?
         var kLoginButtonSize = CGSize()
         let model = TXCustomModel()
@@ -297,6 +297,119 @@ extension AuthUIBuilder {
             model.privacyNavBackImage = privacyNavBackIcon
         }
 
+                
+        model.privacyAlertIsNeedShow = config.privacyAlertIsNeedShow ?? false
+        print("1111--准备设置了privacyAlertIsNeedShow")
+        if (model.privacyAlertIsNeedShow) {
+            print("1111--已经设置了privacyAlertIsNeedShow,哈哈哈")
+            //需要自动登录
+            model.privacyAlertIsNeedAutoLogin = true
+            //左上,左下,右下,右上的圆角
+            model.privacyAlertCornerRadiusArray = [12,0,0,12]
+            //弹窗背景颜色
+            model.privacyAlertBackgroundColor = UIColor.init(hexString: "#272A35", alpha: 1)
+            //弹窗标题
+            model.privacyAlertTitleContent = "用户协议与隐私保护"
+            //弹窗标题字体
+            model.privacyAlertTitleFont = UIFont.systemFont(ofSize: 16,weight: .medium)
+            //弹窗标题文字颜色
+            model.privacyAlertTitleColor = UIColor.white.withAlphaComponent(0.9)
+            //弹窗标题文字背景颜色
+            model.privacyAlertTitleBackgroundColor = UIColor.init(hexString: "#272A35", alpha: 1)
+            //标题位置,默认居中
+            model.privacyAlertTitleAlignment = NSTextAlignment.center
+            //协议内容文字大小
+            model.privacyAlertContentFont = UIFont.systemFont(ofSize: 14)
+            //协议内容间距
+             model.privacyAlertLineSpaceDp = 4
+            //协议内容背景色
+            model.privacyAlertContentBackgroundColor = UIColor.init(hexString: "#272A35", alpha: 1)
+            //协议内容颜色数组
+            model.privacyAlertContentColors = [UIColor.white.withAlphaComponent(0.6),UIColor.white]
+            //前缀文案
+            model.privacyAlertPreText = "请先同意"
+            //后缀文案
+            model.privacyAlertSufText = ""
+            //按钮文字
+            model.privacyAlertBtnContent = "同意并登录"
+            //按钮字体
+            model.privacyAlertButtonFont = UIFont.systemFont(ofSize: 16,weight: .medium)
+            //关闭按钮
+            model.privacyAlertCloseButtonIsNeedShow = true
+            //关闭按钮图片
+            if let image = FlutterAssetImage("assets/login/login_alert_close_btn_img.png") {
+                model.privacyAlertCloseButtonImage = image
+            }
+            //按钮背景图片
+            if let image = FlutterAssetImage("assets/login/login_alert_btn_bg.png") {
+                model.privacyAlertBtnBackgroundImages = [image,image]
+            }
+            //弹窗尺寸
+            model.privacyAlertFrameBlock = { screenSize, surperSize, defaultFrame -> CGRect in
+                return CGRect(x: 0, y: screenSize.height-244, width: screenSize.width, height: 244)
+            }
+            //标题尺寸
+            model.privacyAlertTitleFrameBlock = { screenSize, surperSize, defaultFrame -> CGRect in
+                return CGRect(x: defaultFrame.origin.x, y: 16, width: defaultFrame.size.width, height: defaultFrame.size.height)
+            }
+            //弹窗内容尺寸
+            model.privacyAlertPrivacyContentFrameBlock = { screenSize, surperSize, defaultFrame -> CGRect in
+                return CGRect(x: defaultFrame.origin.x+25, y: defaultFrame.origin.y+24, width: screenSize.width-50, height: defaultFrame.size.height+10)
+            }
+            //确认按钮尺寸
+            model.privacyAlertButtonFrameBlock = { screenSize, surperSize, defaultFrame -> CGRect in
+                return CGRect(x: 32, y: defaultFrame.origin.y+36, width: screenSize.width-64, height: defaultFrame.size.height)
+            }
+            //关闭按钮尺寸
+            model.privacyAlertCloseFrameBlock = { screenSize, surperSize, defaultFrame -> CGRect in
+                print("1111----关闭按钮frame=\(defaultFrame)")
+                return CGRect(x: defaultFrame.origin.x+6, y: 12, width: 30, height: 30)
+            }
+        }
+
         return model
+    }
+}
+
+import UIKit
+
+extension UIColor {
+    /// 用 16 进制值初始化颜色
+    /// - Parameters:
+    ///   - hex: 16 进制颜色值（支持格式：0xFFFFFF、0xFFFF00FF 等，前6位为RGB，后2位可选为透明度）
+    ///   - alpha: 额外指定的透明度（0~1，若 hex 包含透明度，此参数会覆盖它）
+    convenience init(hex: UInt32, alpha: CGFloat? = nil) {
+        // 提取 RGB 分量（前6位）
+        let red = CGFloat((hex >> 16) & 0xFF) / 255.0
+        let green = CGFloat((hex >> 8) & 0xFF) / 255.0
+        let blue = CGFloat(hex & 0xFF) / 255.0
+        
+        // 提取透明度（若 hex 包含后2位，则取后2位；否则默认为1）
+        let hexAlpha = CGFloat((hex >> 24) & 0xFF) / 255.0
+        let finalAlpha = alpha ?? (hex > 0xFFFFFF ? hexAlpha : 1.0)
+        
+        self.init(red: red, green: green, blue: blue, alpha: finalAlpha)
+    }
+    
+    /// 用 16 进制字符串初始化颜色
+    /// - Parameters:
+    ///   - hexString: 16 进制字符串（支持格式：#FFFFFF、FFFFFF、#FFFF00FF、FFFF00FF）
+    ///   - alpha: 额外指定的透明度（0~1，优先级高于字符串中的透明度）
+    convenience init(hexString: String, alpha: CGFloat? = nil) {
+        // 处理字符串（去除 # 和空格）
+        let cleanedString = hexString.trimmingCharacters(in: .whitespacesAndNewlines)
+            .replacingOccurrences(of: "#", with: "")
+        
+        // 验证长度（6位RGB或8位RGBA）
+        guard [6, 8].contains(cleanedString.count) else {
+            fatalError("无效的16进制颜色字符串：\(hexString)，长度必须为6或8位（不含#）")
+        }
+        
+        // 转换为 UInt32
+        guard let hex = UInt32(cleanedString, radix: 16) else {
+            fatalError("无效的16进制颜色字符串：\(hexString)")
+        }
+        
+        self.init(hex: hex, alpha: alpha)
     }
 }

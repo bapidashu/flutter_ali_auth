@@ -405,7 +405,7 @@ public class SwiftFlutterAliAuthPlugin: NSObject, FlutterPlugin {
                 }
 
                 // print("拉起授权页面")
-                TXCommonHandler.sharedInstance().getLoginToken(withTimeout: _timeout, controller: viewController, model: model) { resultDict in
+                TXCommonHandler.sharedInstance().getLoginToken(withTimeout: _timeout, controller: viewController, model: model) { [self] resultDict in
 
                     guard let dict = resultDict as? [String: Any] else {
                         _responseModel = ResponseModel(resultDict)
@@ -430,11 +430,14 @@ public class SwiftFlutterAliAuthPlugin: NSObject, FlutterPlugin {
                             guard let currentViewController = WindowUtils.getCurrentViewController() else {
                                 return
                             }
-                            let hud = MBProgressHUD.showAdded(to: currentViewController.view, animated: true)
-                            hud.mode = MBProgressHUDMode.text
-                            hud.offset.y = 200
-                            hud.label.text = "请先同意相关开发协议哦"
-                            hud.hide(animated: true, afterDelay: 3) // 2秒钟后自动隐藏
+                            if (_authConfig?.authUIConfig.privacyAlertIsNeedShow == false) {
+                                let hud = MBProgressHUD.showAdded(to: currentViewController.view, animated: true)
+                                hud.mode = MBProgressHUDMode.text
+                                hud.offset.y = 200
+                                hud.label.text = "请先同意相关开发协议哦"
+                                hud.hide(animated: true, afterDelay: 3) // 2秒钟后自动隐藏
+                            }
+
                         }
                     }
                     let shouldCancelLoginVC: Bool =

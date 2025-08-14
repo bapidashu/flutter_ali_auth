@@ -247,6 +247,7 @@ class PrivacyConfig {
     this.privacyThreeUrl,
     this.privacyTwoName,
     this.privacyTwoUrl,
+    this.privacyAlertIsNeedShow,
   });
 
   final String? privacyOneName;
@@ -259,6 +260,7 @@ class PrivacyConfig {
   final String? privacyFontColor;
   final double? privacyFrameOffsetX;
   final double? privacyFrameOffsetY;
+  final bool? privacyAlertIsNeedShow;
 
   /// 协议名称之间连接字符串数组，默认 [和, 、, 、] ，即第一个为「和」，其他为「、」，
   /// 按顺序读取，为空则取默认 [和, 和]
@@ -281,7 +283,7 @@ class PrivacyConfig {
 
   @override
   String toString() {
-    return 'PrivacyConfig{privacyOneName: $privacyOneName, privacyOneUrl: $privacyOneUrl, privacyTwoName: $privacyTwoName, privacyTwoUrl: $privacyTwoUrl, privacyThreeName: $privacyThreeName, privacyThreeUrl: $privacyThreeUrl, privacyFontSize: $privacyFontSize, privacyFontColor: $privacyFontColor, privacyFrameOffsetX: $privacyFrameOffsetX, privacyFrameOffsetY: $privacyFrameOffsetY, privacyConnectTexts: $privacyConnectTexts, privacyPreText: $privacyPreText, privacySufText: $privacySufText, privacyOperatorPreText: $privacyOperatorPreText, privacyOperatorSufText: $privacyOperatorSufText, privacyOperatorIndex: $privacyOperatorIndex}';
+    return 'PrivacyConfig{privacyOneName: $privacyOneName, privacyOneUrl: $privacyOneUrl, privacyTwoName: $privacyTwoName, privacyTwoUrl: $privacyTwoUrl, privacyThreeName: $privacyThreeName, privacyThreeUrl: $privacyThreeUrl, privacyFontSize: $privacyFontSize, privacyFontColor: $privacyFontColor, privacyFrameOffsetX: $privacyFrameOffsetX, privacyFrameOffsetY: $privacyFrameOffsetY,privacyAlertIsNeedShow:$privacyAlertIsNeedShow, privacyConnectTexts: $privacyConnectTexts, privacyPreText: $privacyPreText, privacySufText: $privacySufText, privacyOperatorPreText: $privacyOperatorPreText, privacyOperatorSufText: $privacyOperatorSufText, privacyOperatorIndex: $privacyOperatorIndex}';
   }
 }
 

@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Build;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -30,7 +31,7 @@ public class FullPortConfig extends BaseUIConfig {
     public void configAuthPage(AuthUIModel authUIModel) {
 
         CustomAuthUIControlClickListener customAuthUIControlClickListener = new CustomAuthUIControlClickListener(mAuthHelper, mContext, mChannel);
-
+        customAuthUIControlClickListener.authUIModel = authUIModel;
         mAuthHelper.setUIClickListener(customAuthUIControlClickListener);
 
         int authPageOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT;
@@ -115,6 +116,24 @@ public class FullPortConfig extends BaseUIConfig {
             buildCustomView(authUIModel.customViewBlockList);
         }
 
+        String privacyAlertConfirmBtnBgPath = null;
+        try {
+            privacyAlertConfirmBtnBgPath = mFlutterAssets.getAssetFilePathByName("assets/login/login_alert_btn_bg.png");
+            System.out.println(privacyAlertConfirmBtnBgPath);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        String privacyAlertCloseBtnBgPath = null;
+        try {
+            privacyAlertCloseBtnBgPath = mFlutterAssets.getAssetFilePathByName("assets/login/login_alert_close_btn_img.png");
+            System.out.println(privacyAlertCloseBtnBgPath);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        int dialogHeight = 244;
+        int dialogWidth= mScreenWidthDp;
         mAuthHelper.setAuthUIConfig(new AuthUIConfig.Builder()
                 .setStatusBarColor(Color.TRANSPARENT)
                 .setLightColor(true)
@@ -185,6 +204,46 @@ public class FullPortConfig extends BaseUIConfig {
                 .setPageBackgroundPath(backgroundImagePath)
                 .setAuthPageActIn(String.valueOf(R.anim.slide_up), String.valueOf(R.anim.slide_down))
                 .setAuthPageActOut(String.valueOf(R.anim.slide_up), String.valueOf(R.anim.slide_down))
+
+
+                // ====== 隐私弹窗（Privacy Alert）配置，按 iOS 对齐 ======
+                .setPrivacyAlertIsNeedShow(authUIModel.privacyAlertIsNeedShow)
+                .setPrivacyAlertIsNeedAutoLogin(true)
+                .setPrivacyAlertMaskAlpha(0.5F)
+                .setPrivacyAlertCornerRadiusArray(new int[]{12, 12, 0, 0})
+                .setPrivacyAlertBackgroundColor(Color.parseColor("#272A35"))
+                .setPrivacyAlertAlpha(1f)
+                .setPrivacyAlertTitleContent("用户协议与隐私保护")
+                .setPrivacyAlertTitleTextSize(16)
+                .setPrivacyAlertTitleColor(Color.argb((int) (0.9 * 255), 255, 255, 255)) // 白色 90% 透明
+                .setPrivacyAlertTitleBackgroundColor(Color.parseColor("#272A35"))
+                .setPrivacyAlertContentVerticalMargin(25)
+                .setPrivacyAlertContentHorizontalMargin(25)
+                .setPrivacyAlertContentTextSize(14)
+                .setPrivacyAlertContentBackgroundColor(Color.parseColor("#272A35"))
+                .setPrivacyAlertContentBaseColor(Color.argb((int) (0.6 * 255), 255, 255, 255))
+                .setPrivacyAlertContentAlignment(Gravity.START)
+                .setPrivacyAlertBefore("请先同意")
+                .setPrivacyAlertEnd("")
+                .setPrivacyAlertBtnContent("同意并登录")
+                .setPrivacyAlertBtnTextSize(16)
+                .setPrivacyAlertBtnBackgroundImgPath(privacyAlertConfirmBtnBgPath)
+                .setPrivacyAlertBtnWidth(mScreenWidthDp-50)
+                .setPrivacyAlertBtnHeigth(50)
+                //弹窗位置和大小
+                .setPrivacyAlertAlignment(Gravity.BOTTOM)
+                .setPrivacyAlertHeight(244)
+                .setPrivacyAlertWidth(mScreenWidthDp)
+                .setPrivacyAlertOffsetX(0)
+                .setPrivacyAlertOffsetY(mScreenHeightDp-244)
+                //关闭按钮
+                .setPrivacyAlertCloseBtnShow(true)
+                .setPrivacyAlertCloseImagPath(privacyAlertCloseBtnBgPath)
+                .setPrivacyAlertCloseImgHeight(30)
+                .setPrivacyAlertCloseImgWidth(30)
+
+
+
                 .create());
     }
 

@@ -8,6 +8,7 @@ import android.widget.Toast;
 import com.fluttercandies.flutter_ali_auth.AuthClient;
 import com.fluttercandies.flutter_ali_auth.R;
 import com.fluttercandies.flutter_ali_auth.model.AuthResponseModel;
+import com.fluttercandies.flutter_ali_auth.model.AuthUIModel;
 import com.mobile.auth.gatewayauth.AuthUIControlClickListener;
 import com.mobile.auth.gatewayauth.PhoneNumberAuthHelper;
 import com.mobile.auth.gatewayauth.ResultCode;
@@ -22,6 +23,7 @@ public class CustomAuthUIControlClickListener implements AuthUIControlClickListe
     private PhoneNumberAuthHelper mAuthHelper;
     private Context mContext;
     private MethodChannel mChannel;
+    public AuthUIModel authUIModel;
     public CustomAuthUIControlClickListener(PhoneNumberAuthHelper phoneNumberAuthHelper,
                                             Context context, MethodChannel methodChannel){
         mAuthHelper = phoneNumberAuthHelper;
@@ -68,7 +70,9 @@ public class CustomAuthUIControlClickListener implements AuthUIControlClickListe
             //通过此回调自己设置toast
             case ResultCode.CODE_ERROR_USER_LOGIN_BTN:
                 if (!jsonObj.optBoolean("isChecked")) {
-                    Toast.makeText(mContext, R.string.custom_toast, Toast.LENGTH_SHORT).show();
+                    if (!authUIModel.privacyAlertIsNeedShow) {
+                        Toast.makeText(mContext, R.string.custom_toast, Toast.LENGTH_SHORT).show();
+                    }
                 }
 
                 break;

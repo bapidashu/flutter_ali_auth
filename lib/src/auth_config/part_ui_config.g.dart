@@ -978,6 +978,7 @@ Map<String, dynamic> _$PrivacyConfigToJson(PrivacyConfig instance) {
   writeNotNull('privacyOperatorPreText', instance.privacyOperatorPreText);
   writeNotNull('privacyOperatorSufText', instance.privacyOperatorSufText);
   writeNotNull('privacyOperatorIndex', instance.privacyOperatorIndex);
+  writeNotNull('privacyAlertIsNeedShow', instance.privacyAlertIsNeedShow);
   return val;
 }
 

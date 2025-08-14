@@ -158,6 +158,8 @@ struct AuthUIConfig: Codable {
 
     var privacyOperatorIndex: Int?
 
+    var privacyAlertIsNeedShow: Bool?
+
     var customViewBlockList: [CustomViewBlock]?
 }
 
