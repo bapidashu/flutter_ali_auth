@@ -241,6 +241,7 @@ public class FullPortConfig extends BaseUIConfig {
                 .setPrivacyAlertCloseImagPath(privacyAlertCloseBtnBgPath)
                 .setPrivacyAlertCloseImgHeight(30)
                 .setPrivacyAlertCloseImgWidth(30)
+                .setLogBtnToastHidden(true)
 
 
 
