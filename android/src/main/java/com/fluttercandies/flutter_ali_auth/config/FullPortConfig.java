@@ -204,6 +204,7 @@ public class FullPortConfig extends BaseUIConfig {
                 .setPageBackgroundPath(backgroundImagePath)
                 .setAuthPageActIn(String.valueOf(R.anim.slide_up), String.valueOf(R.anim.slide_down))
                 .setAuthPageActOut(String.valueOf(R.anim.slide_up), String.valueOf(R.anim.slide_down))
+                .setProtocolAction("com.locedash.mj.protocolWeb")
 
 
                 // ====== 隐私弹窗（Privacy Alert）配置，按 iOS 对齐 ======

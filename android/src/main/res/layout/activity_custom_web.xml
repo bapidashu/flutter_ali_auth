@@ -11,9 +11,9 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
-        app:title="自定义协议页"
-        app:titleTextColor="@android:color/white" />
+        android:background="@color/white"
+        app:title="隐私协议"
+        app:titleTextColor="@android:color/black" />
 
     <WebView
         android:id="@+id/webView"

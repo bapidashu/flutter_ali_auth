@@ -36,13 +36,23 @@
             android:name="com.mobile.auth.gatewayauth.PrivacyDialogActivity"
             android:screenOrientation="behind"
             android:theme="@style/authsdk_activity_dialog"/>
-
         <activity
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:exported="false"
-            android:launchMode="singleTop"
-            android:name="com.mobile.auth.gatewayauth.activity.AuthWebVeiwActivity"
-            android:screenOrientation="behind"/>
+            android:configChanges="orientation|keyboardHidden|screenSize|uiMode|fontScale"
+            android:name="com.fluttercandies.flutter_ali_auth.CustomWebViewActivity"
+            android:exported="true"
+            android:theme="@style/AuthLoginTheme"
+            android:screenOrientation="sensorPortrait">
+            <intent-filter>
+                <action android:name="com.locedash.mj.protocolWeb"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+<!--        <activity-->
+<!--            android:configChanges="orientation|keyboardHidden|screenSize"-->
+<!--            android:exported="false"-->
+<!--            android:launchMode="singleTop"-->
+<!--            android:name="com.mobile.auth.gatewayauth.activity.AuthWebVeiwActivity"-->
+<!--            android:screenOrientation="behind"/>-->
 
         <!-- for override the enter animation-->
         <activity android:name=".mask.DecoyMaskActivity"
