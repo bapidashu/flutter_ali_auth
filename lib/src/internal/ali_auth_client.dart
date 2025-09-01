@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -23,14 +24,24 @@ class AliAuthClient {
     required AuthConfig authConfig,
     bool isAutoQuitePage = true
   }) async {
-    return await _methodChannel.invokeMethod<bool>(
-      'init',
-      {'authConfig':authConfig.toJson(),'isAutoQuitePage':isAutoQuitePage},
-    );
+    if(Platform.isIOS){
+      Map<String, dynamic> mMap = authConfig.toJson();
+      mMap['isAutoQuitePage'] = isAutoQuitePage;
+      return await _methodChannel.invokeMethod<bool>(
+        'init',
+        mMap,
+      );
+    }else{
+      return await _methodChannel.invokeMethod<bool>(
+        'init',
+        {'authConfig':authConfig.toJson(),'isAutoQuitePage':isAutoQuitePage},
+      );
+    }
+
   }
   static Future<void> showCancelLogoutDialog() async {
     return await _methodChannel.invokeMethod(
-      'showCancelLogoutDialog');
+        'showCancelLogoutDialog');
   }
   /// 初始化之后的SDK的异步回调
   /// [onEvent] 初始化之后会进行环境检查和加速拉起授权页面，这些回调会在这里返回，
