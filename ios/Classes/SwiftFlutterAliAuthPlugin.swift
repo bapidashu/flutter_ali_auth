@@ -15,6 +15,7 @@ public class SwiftFlutterAliAuthPlugin: NSObject, FlutterPlugin {
     static var DART_CALL_METHOD_ON_INIT: String = "onEvent"
 
     var sdkAvailable: Bool = true
+    var isAutoQuitePage: Bool = true
 
     var initSdkSuccess: Bool = false
 
@@ -103,6 +104,7 @@ public class SwiftFlutterAliAuthPlugin: NSObject, FlutterPlugin {
             result(FlutterError(code: PNSCodeEnvCheckFail, message: "初始化失败，参数不正确：iOS的SDK为空", details: nil))
             return
         }
+         isAutoQuitePage = params["isAutoQuitePage"] as! Bool
 
         // 设置参数
         _authConfig = AuthConfig(params: params)
@@ -120,7 +122,7 @@ public class SwiftFlutterAliAuthPlugin: NSObject, FlutterPlugin {
                     _responseMoedel = ResponseModel(resultDict)
 
                     self.methodChannel?.invokeMethod(SwiftFlutterAliAuthPlugin.DART_CALL_METHOD_ON_INIT, arguments: _responseMoedel.json)
-                    
+
                     result(false)
 
                     return
@@ -312,8 +314,8 @@ public class SwiftFlutterAliAuthPlugin: NSObject, FlutterPlugin {
                     }
                     let shouldCancelLoginVC: Bool =
                         resultCode == PNSCodeSuccess || resultCode == PNSCodeLoginControllerClickCancel ||
-                        resultCode == PNSCodeLoginControllerClickChangeBtn
-                    if shouldCancelLoginVC {
+                    resultCode == PNSCodeLoginControllerClickChangeBtn
+                    if shouldCancelLoginVC && self.isAutoQuitePage == true {
                         TXCommonHandler.sharedInstance().cancelLoginVC(animated: true, complete: nil)
                     }
                 }
@@ -336,7 +338,7 @@ public class SwiftFlutterAliAuthPlugin: NSObject, FlutterPlugin {
 
         var _config: AuthConfig?
         var _timeout: TimeInterval = 5.0
-        
+
         if let argumentList = arguments as? [Any]{
             if let configMap = argumentList.first as? [String: Any]  {
                 _config = AuthConfig(params: configMap)
@@ -352,7 +354,7 @@ public class SwiftFlutterAliAuthPlugin: NSObject, FlutterPlugin {
             result(FlutterError(code: PNSCodeLoginControllerPresentFailed, message: "初始化失败，SDK未初始化或参数不正确", details: nil))
             return
         }
-        
+
 
         if let rawConfig = arguments as? [String: Any] {
             _config = AuthConfig(params: rawConfig)
@@ -443,7 +445,7 @@ public class SwiftFlutterAliAuthPlugin: NSObject, FlutterPlugin {
                     let shouldCancelLoginVC: Bool =
                         resultCode == PNSCodeSuccess || resultCode == PNSCodeLoginControllerClickCancel ||
                         resultCode == PNSCodeLoginControllerClickChangeBtn
-                    if shouldCancelLoginVC {
+                    if shouldCancelLoginVC && self.isAutoQuitePage == true{
                         TXCommonHandler.sharedInstance().cancelLoginVC(animated: true, complete: nil)
                     }
                 }

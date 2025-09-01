@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import com.fluttercandies.flutter_ali_auth.config.BaseUIConfig;
@@ -33,6 +32,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.Map;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.EventChannel;
@@ -70,6 +70,7 @@ public class AuthClient {
     private static volatile AuthClient instance;
 
     private MethodChannel mChannel;
+    private boolean isAutoQuitePage;
 
     //Singleton
     private AuthClient() {
@@ -93,12 +94,17 @@ public class AuthClient {
     public void initSdk(Object arguments, @NonNull MethodChannel.Result result) {
 
         try {
-            Gson gson = new Gson();
-            String jsonBean = gson.toJson(arguments);
-            authModel = gson.fromJson(jsonBean, AuthModel.class);
-            AuthUIModel authUIModel = gson.fromJson(jsonBean, AuthUIModel.class);
-            authModel.setAuthUIModel(authUIModel);
-            Log.d(TAG, "initSdk: " + jsonBean);
+            if (arguments instanceof Map) {
+                Map<String, Object> map = (Map<String, Object>) arguments;
+                isAutoQuitePage = (boolean) map.get("isAutoQuitePage");
+                Gson gson = new Gson();
+                String jsonBean = gson.toJson(map.get("authConfig"));
+                authModel = gson.fromJson(jsonBean, AuthModel.class);
+                AuthUIModel authUIModel = gson.fromJson(jsonBean, AuthUIModel.class);
+                authModel.setAuthUIModel(authUIModel);
+                Log.d(TAG, "initSdk: " + jsonBean);
+            }
+
         } catch (Exception e) {
             Log.e(TAG, "解析AuthModel遇到错误：" + e);
             result.error(ResultCode.CODE_ERROR_INVALID_PARAM, errorArgumentsMsg + ": " + e.getMessage(), e.getStackTrace());
@@ -259,7 +265,9 @@ public class AuthClient {
 //                            eventSink.success(authResponseModel.toJson());
                             if (ResultCode.CODE_SUCCESS.equals(tokenRet.getCode())) {
                                 mAuthHelper.hideLoginLoading();
-                                mAuthHelper.quitLoginPage();
+                                if( isAutoQuitePage){
+                                    mAuthHelper.quitLoginPage();
+                                }
                                 mAuthHelper.setAuthListener(null);
                                 clearCached();
                             } else if (ResultCode.CODE_ERROR_FUNCTION_TIME_OUT.equals(tokenRet.getCode())
@@ -372,7 +380,9 @@ public class AuthClient {
                             mChannel.invokeMethod(DART_CALL_METHOD_ON_INIT, responseModel.toJson());
                             if (ResultCode.CODE_SUCCESS.equals(tokenRet.getCode())) {
                                 mAuthHelper.hideLoginLoading();
-                                mAuthHelper.quitLoginPage();
+                                if( isAutoQuitePage){
+                                    mAuthHelper.quitLoginPage();
+                                }
                                 mAuthHelper.setAuthListener(null);
                                 clearCached();
                             } else if (ResultCode.CODE_ERROR_FUNCTION_TIME_OUT.equals(tokenRet.getCode())
@@ -447,6 +457,7 @@ public class AuthClient {
     public void hideLoginLoading() {
         mAuthHelper.hideLoginLoading();
     }
+
 
     /**
      * 退出授权认证页

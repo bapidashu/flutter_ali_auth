@@ -21,13 +21,17 @@ class AliAuthClient {
   /// 返回是否成功
   static Future<bool?> initSdk({
     required AuthConfig authConfig,
+    bool isAutoQuitePage = true
   }) async {
     return await _methodChannel.invokeMethod<bool>(
       'init',
-      authConfig.toJson(),
+      {'authConfig':authConfig.toJson(),'isAutoQuitePage':isAutoQuitePage},
     );
   }
-
+  static Future<void> showCancelLogoutDialog() async {
+    return await _methodChannel.invokeMethod(
+      'showCancelLogoutDialog');
+  }
   /// 初始化之后的SDK的异步回调
   /// [onEvent] 初始化之后会进行环境检查和加速拉起授权页面，这些回调会在这里返回，
   /// 可根据[AuthResponseModel.resultCode]和[AuthResponseModel.innerCode]的进行判断，
